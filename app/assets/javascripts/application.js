@@ -14,6 +14,47 @@
 //= require jquery_ujs
 //= require foundation
 //= require_tree .
+
+//------------------------------------------------------------------------------------
+
 $(function() {
   $(document).foundation();
 });
+
+//------------------------------------------------------------------------------------
+
+window.fbAsyncInit = function () {
+    FB.init({ appId: '791850004245509', cookie: true, xfbml: true, oauth: true });
+
+    // *** here is my code ***
+    if (typeof facebookInit == 'function') {
+        facebookInit();
+    }
+};
+
+(function(d){
+    var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    d.getElementsByTagName('head')[0].appendChild(js);
+}(document));
+
+function facebookInit() {
+
+	FB.api(
+	"/{622163018}",
+	function (response) {
+	  if (response && !response.error) {
+	   
+	  	console.log('error');
+
+	  }else{
+	  	console.log('sucsesss');
+	  }
+	}
+	);
+
+}	// end facebook Init
+
+
+//------------------------------------------------------------------------------------
