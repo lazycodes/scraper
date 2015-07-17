@@ -79,6 +79,7 @@ $(document).ready(function(){
 
 							console.log(facebookName);
 							$('#name').html('Hello '+facebookName);
+							$('#profile').attr('src', facebookProfilePicture);
 
 				        }else{
 
