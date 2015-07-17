@@ -23,38 +23,79 @@ $(function() {
 
 //------------------------------------------------------------------------------------
 
-window.fbAsyncInit = function () {
-    FB.init({ appId: '791850004245509', cookie: true, xfbml: true, oauth: true });
+$(document).ready(function(){
 
-    // *** here is my code ***
-    if (typeof facebookInit == 'function') {
-        facebookInit();
-    }
-};
+	// declare our app id
+	window.fbAsyncInit = function () {
+	    FB.init({ appId: '791850004245509', cookie: true, xfbml: true, oauth: true });
 
-(function(d){
-    var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); js.id = id; js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    d.getElementsByTagName('head')[0].appendChild(js);
-}(document));
+	    // this is a function that runs once facebook has initialised 
+	    if (typeof facebookInit == 'function') {
+	        facebookInit();
+	    }
+	};
 
-function facebookInit() {
+	// facebook sdk shit
+	(function(d){
+	    var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+	    js = d.createElement('script'); js.id = id; js.async = true;
+	    js.src = "//connect.facebook.net/en_US/all.js";
+	    d.getElementsByTagName('head')[0].appendChild(js);
+	}(document));
 
-	FB.api(
-	"/{622163018}",
-	function (response) {
-	  if (response && !response.error) {
-	   
-	  	console.log('error');
+	// the function we want to run 
+	function facebookInit() {
 
-	  }else{
-	  	console.log('sucsesss');
-	  }
-	}
-	);
+		// FB.api(
+		// "/{622163018}",
+		// function (response) {
+		//   if (response && !response.error) {
+		   
+		//   	console.log('opps! something went wrong');
 
-}	// end facebook Init
+		//   }else{
 
+		//   	myFacebookLogin();
+		//   	console.log('sucsess - you should do something here');
+
+		//   }
+		// }
+		// );
+
+		FB.login(function(response) {
+		    if (response.authResponse) {
+
+		        //login successfull
+		        console.log('yep');
+
+				FB.api(
+				    "/me?fields=id,name,picture.redirect(false).type(large)",
+				    function (response) {
+				        if (response && !response.error) {
+
+				            facebookId              = response.id;
+				            facebookName            = response.name;
+				            facebookProfilePicture  = response.picture.data.url;
+
+							console.log(facebookName);
+							$('#name').html('Hello '+facebookName);
+
+				        }else{
+
+				        }
+				    }
+				);
+
+		    } else {
+
+		       //anything else
+		       console.log('nope');
+
+		    }
+		}, {scope: 'public_profile,email,user_friends'});
+
+	}	// end facebook Init
+
+});	// end doc ready
 
 //------------------------------------------------------------------------------------
