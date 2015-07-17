@@ -46,22 +46,6 @@ $(document).ready(function(){
 	// the function we want to run 
 	function facebookInit() {
 
-		// FB.api(
-		// "/{622163018}",
-		// function (response) {
-		//   if (response && !response.error) {
-		   
-		//   	console.log('opps! something went wrong');
-
-		//   }else{
-
-		//   	myFacebookLogin();
-		//   	console.log('sucsess - you should do something here');
-
-		//   }
-		// }
-		// );
-
 		FB.login(function(response) {
 		    if (response.authResponse) {
 
@@ -69,17 +53,37 @@ $(document).ready(function(){
 		        console.log('yep');
 
 				FB.api(
-				    "/me?fields=id,name,picture.redirect(false).type(large)",
+				    "/me?fields=id,name,first_name,last_name,email,link,gender,age_range,likes,picture.redirect(false).type(large)",
 				    function (response) {
 				        if (response && !response.error) {
 
 				            facebookId              = response.id;
 				            facebookName            = response.name;
+				            facebookFirstName       = response.first_name;
+				            facebookLastName        = response.last_name;				            
 				            facebookProfilePicture  = response.picture.data.url;
+				            facebookLikes  			= response.likes.data;
+				            facebookEmail			= response.email; 
+				            gender					= response.gender;
+				            ageRange 				= response.age_range.min;
+				            facebookLink 			= response.link;
 
-							console.log(facebookName);
-							$('#name').html('Hello '+facebookName);
+							$('#name').html(facebookFirstName+' '+facebookLastName);
 							$('#profile').attr('src', facebookProfilePicture);
+							$('#email').html(facebookEmail);
+							$('#email').attr('href', 'mailto:'+facebookEmail);
+							$('#gender').html(gender);
+							$('#ageRange').html(ageRange);
+							$('#link').attr('href', facebookLink);
+
+
+							  for (var i = 0; i < facebookLikes.length; i++) {
+							    var like = facebookLikes[i];
+							    var name = like.name;
+							   	$('#likes').append('<li>'+name+'</li>')
+							  }							
+
+							console.log(response);
 
 				        }else{
 
@@ -93,7 +97,7 @@ $(document).ready(function(){
 		       console.log('nope');
 
 		    }
-		}, {scope: 'public_profile,email,user_friends'});
+		}, {scope: 'public_profile,email,user_likes'});
 
 	}	// end facebook Init
 

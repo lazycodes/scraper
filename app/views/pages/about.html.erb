@@ -1,22 +1,27 @@
 <% content_for :title do %>About<% end %>
 
-<h3>About the Website</h3>
+<section id="page">
+	
+	<div class="row">
 
-<p>
-	This web application was created with
-	<%= link_to('Rails Composer', 'http://railsapps.github.io/rails-composer/') %>
-	from the <%= link_to('RailsApps project', 'http://railsapps.github.io/') %>.
-</p>
+		<div class="large-3 columns">
+			<img id="profile" src="" alt="">
+		</div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
+		<div class="large-9 columns">
+			<strong>Name (click to view profile)</strong>
+			<a id="link" target="_blank" href=""><p id="name"></p></a>
+			<strong>Email</strong>
+			<p><a href="#" target="_blank" id="email"></a></p>
+			<strong>Gender</strong>
+			<p id="gender"></p>
+			<strong>Age Range</strong>
+			<p id="ageRange"></p>
+			<strong>Likes</strong>
+			<ul id="likes"></ul>
+		</div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<h1 id="name"></h1>
-		<img id="profile" src="" alt="">
 	</div>
-</div>
+
+</section>	<!-- end page -->
+
